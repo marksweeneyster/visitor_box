@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <variant>
+#include <tuple>
 
 
 /**
@@ -55,6 +56,34 @@ void Visit3(const var_t& component) {
     }
 }
 
+using visitor_type = decltype(&Visit3);
+
+void Visit4(const var_t& component) {
+    if (std::holds_alternative<ConcreteComponentA>(component)) {
+        auto value = std::get<ConcreteComponentA>(component);
+        std::cout << value.ExclusiveMethodOfConcreteComponentA()  << " + Visit4\n";
+    }
+    else if (std::holds_alternative<ConcreteComponentB>(component)) {
+        auto value = std::get<ConcreteComponentB>(component);
+        std::cout << value.SpecialMethodOfConcreteComponentB()  << " + Visit4\n";
+    } else {
+        std::cout << "unsupported variant in Visit4\n";
+    }
+}
+
+void Visit5(const var_t& component) {
+    if (std::holds_alternative<ConcreteComponentA>(component)) {
+        auto value = std::get<ConcreteComponentA>(component);
+        std::cout << value.ExclusiveMethodOfConcreteComponentA()  << " + Visit5\n";
+    }
+    else if (std::holds_alternative<ConcreteComponentB>(component)) {
+        auto value = std::get<ConcreteComponentB>(component);
+        std::cout << value.SpecialMethodOfConcreteComponentB()  << " + Visit5\n";
+    } else {
+        std::cout << "unsupported variant in Visit5\n";
+    }
+}
+
 /*
  * Nice explanation of the magic behind "auto&& arg" commonly used with std::visit:
  *   https://levelup.gitconnected.com/understanding-std-visit-in-c-a-type-safe-way-to-traverse-variant-objects-dbeff9b47003
@@ -82,9 +111,14 @@ int main() {
     }
 
     std::cout << '\n';
+    std::array<visitor_type,3> visitors = {Visit3, Visit4, Visit5};
 
-    for (const auto& component : components) {
-        std::visit(Visit3, component);
+    for (const auto& visitor : visitors) {
+        for (const auto& component : components) {
+            std::visit(visitor, component);
+        }
+
+        std::cout << '\n';
     }
 
     return 0;
