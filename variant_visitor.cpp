@@ -5,7 +5,7 @@
 
 
 /**
- * Borrow the concrete classes from code guru.
+ * Borrow the concrete classes from refactoring guru.
  */
 class ConcreteComponentA {
 public:
