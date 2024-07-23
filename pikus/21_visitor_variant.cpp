@@ -1,7 +1,4 @@
 // 10 with std::variant and std::visit
-#if __cplusplus < 201703L// C++17 needed
-#error "This example requires C++17"
-#else
 #include <iostream>
 #include <memory>
 #include <string_view>
@@ -103,4 +100,3 @@ int main() {
   walk(d);
   walk(l);
 }
-#endif

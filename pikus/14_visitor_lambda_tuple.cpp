@@ -1,7 +1,6 @@
 // 13 with tuple used for typelist
 #include <iostream>
 #include <memory>
-#include <string>
 #include <string_view>
 #include <tuple>
 
@@ -36,8 +35,8 @@ template<typename Base, typename F1>
 class LambdaVisitor<Base, std::tuple<F1>> : public Base, public F1 {
 public:
   using F1::operator();
-  LambdaVisitor(F1&& f1) : F1(std::move(f1)) {}
-  LambdaVisitor(const F1& f1) : F1(f1) {}
+  explicit LambdaVisitor(F1&& f1) : F1(std::move(f1)) {}
+  explicit LambdaVisitor(const F1& f1) : F1(f1) {}
 };
 
 template<typename Base, typename F1, typename... F>
@@ -46,10 +45,10 @@ class LambdaVisitor<Base, std::tuple<F1, F...>>
 public:
   using F1::operator();
   using LambdaVisitor<Base, std::tuple<F...>>::operator();
-  LambdaVisitor(F1&& f1, F&&... f)
+  explicit LambdaVisitor(F1&& f1, F&&... f)
       : F1(std::move(f1)),
         LambdaVisitor<Base, std::tuple<F...>>(std::forward<F>(f)...) {}
-  LambdaVisitor(const F1& f1, F&&... f)
+  explicit LambdaVisitor(const F1& f1, F&&... f)
       : F1(f1), LambdaVisitor<Base, std::tuple<F...>>(std::forward<F>(f)...) {}
 };
 
@@ -80,8 +79,8 @@ auto lambda_visitor(F&&... f) {
 
 class Pet {
 public:
-  virtual ~Pet() {}
-  Pet(std::string_view color) : color_(color) {}
+  virtual ~Pet() = default;
+  explicit Pet(std::string_view color) : color_(color) {}
   const std::string& color() const { return color_; }
   virtual void accept(PetVisitor& v) = 0;
 
@@ -107,32 +106,30 @@ class Dog : public Visitable<Dog> {
 class FeedingVisitor : public PetVisitor {
 public:
   void visit(Cat* c) override {
-    std::cout << "Feed tuna to the " << c->color() << " cat" << std::endl;
+    std::cout << "Feed tuna to the " << c->color() << " cat\n";
   }
   void visit(Dog* d) override {
-    std::cout << "Feed steak to the " << d->color() << " dog" << std::endl;
+    std::cout << "Feed steak to the " << d->color() << " dog\n";
   }
 };
 
 class PlayingVisitor : public PetVisitor {
 public:
   void visit(Cat* c) override {
-    std::cout << "Play with feather with the " << c->color() << " cat"
-              << std::endl;
+    std::cout << "Play with feather with the " << c->color() << " cat\n";
   }
   void visit(Dog* d) override {
-    std::cout << "Play fetch with the " << d->color() << " dog" << std::endl;
+    std::cout << "Play fetch with the " << d->color() << " dog\n";
   }
 };
 
 void walk(Pet& p) {
   auto v(lambda_visitor<PetVisitor>(
           [](Cat* c) {
-            std::cout << "Let the " << c->color() << " cat out" << std::endl;
+            std::cout << "Let the " << c->color() << " cat out\n";
           },
           [](Dog* d) {
-            std::cout << "Take the " << d->color() << " dog for a walk"
-                      << std::endl;
+            std::cout << "Take the " << d->color() << " dog for a walk\n";
           }));
   p.accept(v);
 }
