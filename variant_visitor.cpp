@@ -16,7 +16,7 @@ public:
   std::string SpecialMethodOfConcreteComponentB() const { return "B"; }
 };
 
-using var_t = std::variant<ConcreteComponentA, ConcreteComponentB>;
+using var_animal_t = std::variant<ConcreteComponentA, ConcreteComponentB>;
 
 void Visit1(const ConcreteComponentA &cca) {
   std::cout << cca.ExclusiveMethodOfConcreteComponentA() << " + Visit1\n";
@@ -37,21 +37,21 @@ void Visit2(const ConcreteComponentB &ccb) {
  * Moving the variant type deduction into a single visit function.
  * Six one way, half dozen the other
  */
-void Visit3(const var_t &component) {
+void Visit3(const var_animal_t &component) {
   if (std::holds_alternative<ConcreteComponentA>(component)) {
     auto value = std::get<ConcreteComponentA>(component);
-    std::cout << value.ExclusiveMethodOfConcreteComponentA() << " + Visit3\n";
+    std::cout << value.ExclusiveMethodOfConcreteComponentA() << " + VisitSeeSay\n";
   } else if (std::holds_alternative<ConcreteComponentB>(component)) {
     auto value = std::get<ConcreteComponentB>(component);
-    std::cout << value.SpecialMethodOfConcreteComponentB() << " + Visit3\n";
+    std::cout << value.SpecialMethodOfConcreteComponentB() << " + VisitSeeSay\n";
   } else {
-    std::cout << "unsupported variant in Visit3\n";
+    std::cout << "unsupported variant in VisitSeeSay\n";
   }
 }
 
 using visitor_type = decltype(&Visit3);
 
-void Visit4(const var_t &component) {
+void Visit4(const var_animal_t &component) {
   if (std::holds_alternative<ConcreteComponentA>(component)) {
     auto value = std::get<ConcreteComponentA>(component);
     std::cout << value.ExclusiveMethodOfConcreteComponentA() << " + Visit4\n";
@@ -63,7 +63,7 @@ void Visit4(const var_t &component) {
   }
 }
 
-void Visit5(const var_t &component) {
+void Visit5(const var_animal_t &component) {
   if (std::holds_alternative<ConcreteComponentA>(component)) {
     auto value = std::get<ConcreteComponentA>(component);
     std::cout << value.ExclusiveMethodOfConcreteComponentA() << " + Visit5\n";
@@ -84,7 +84,7 @@ void Visit5(const var_t &component) {
 int main() {
   ConcreteComponentA cca;
   ConcreteComponentB ccb;
-  std::array<var_t, 2> components = {cca, ccb};
+  std::array<var_animal_t, 2> components = {cca, ccb};
 
   for (const auto &component : components) {
     /**
