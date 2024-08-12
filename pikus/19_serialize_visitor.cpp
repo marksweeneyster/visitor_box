@@ -1,4 +1,4 @@
-// Serialization visitor (compile-time)
+// Serialization Visitor (compile-time)
 #include <exception>
 #include <iostream>
 #include <sstream>

@@ -5,7 +5,7 @@
 #include <tuple>
 
 // ---------------------------------
-// Generic visitor base
+// Generic Visitor base
 template<typename... Types>
 class Visitor;
 

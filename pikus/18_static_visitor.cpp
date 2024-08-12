@@ -1,4 +1,4 @@
-// Compile-time visitor
+// Compile-time Visitor
 #include <iostream>
 #include <string>
 #include <string_view>

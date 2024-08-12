@@ -8,3 +8,4 @@ add_executable(variant_visitor variant_visitor.cpp)
 add_executable(animals animals.cpp)
 
 add_subdirectory(pikus)
+add_subdirectory(cpp_weekly)

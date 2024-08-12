@@ -1,4 +1,4 @@
-// Basic visitor
+// Basic Visitor
 #include <iostream>
 #include <string>
 #include <string_view>

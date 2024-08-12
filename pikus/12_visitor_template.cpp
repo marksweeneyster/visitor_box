@@ -5,7 +5,7 @@
 #include <string_view>
 
 // ---------------------------------
-// Generic visitor base
+// Generic Visitor base
 template<typename... Types>
 class Visitor;
 

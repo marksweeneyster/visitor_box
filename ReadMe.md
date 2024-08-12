@@ -1,4 +1,4 @@
 # Visitor design pattern experiments 
-aka visitor sandbox
+aka Visitor sandbox
 
-Starting from the Refactoring Guru's C++ [example](https://refactoring.guru/design-patterns/visitor/cpp/example), see how that looks with `std::visit`, introduced in C++ 17.
+Starting from the Refactoring Guru's C++ [example](https://refactoring.guru/design-patterns/Visitor/cpp/example), see how that looks with `std::visit`, introduced in C++ 17.

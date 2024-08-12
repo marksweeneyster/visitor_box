@@ -1,4 +1,4 @@
-// 04 with return value through visitor object
+// 04 with return value through Visitor object
 #include <cassert>
 #include <iostream>
 #include <memory>

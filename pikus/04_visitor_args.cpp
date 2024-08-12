@@ -1,4 +1,4 @@
-// 02 with additional arguments to visitor functions
+// 02 with additional arguments to Visitor functions
 #include <cassert>
 #include <iostream>
 #include <memory>

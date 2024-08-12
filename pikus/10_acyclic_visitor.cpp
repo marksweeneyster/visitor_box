@@ -1,4 +1,4 @@
-// 02 as acyclic visitor
+// 02 as acyclic Visitor
 #include <cassert>
 #include <iostream>
 #include <memory>

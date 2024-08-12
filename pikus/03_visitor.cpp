@@ -1,4 +1,4 @@
-// 02 with polymorphic calls for visitor too
+// 02 with polymorphic calls for Visitor too
 #include <iostream>
 #include <memory>
 #include <string>
