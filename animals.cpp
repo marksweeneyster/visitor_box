@@ -46,15 +46,40 @@ void VisitSeeSay(const var_animal_t &component) {
     }
 }
 
-int main() {
-    Cow cow;
-    Pig pig;
-    Dog dog;
-    std::array<var_animal_t, 3> animals = {cow, pig, dog};
+template<typename... T>
+struct overloaded : T... {
+  using T::operator()...;
+};
+// Some compilers might require this explicit deduction guide
+template<typename... T>
+overloaded(T...) -> overloaded<T...>;
 
-    for (const auto& animal : animals) {
-        std::visit(VisitSeeSay, animal);
-    }
+int main() {
+  Cow cow;
+  Pig pig;
+  Dog dog;
+  std::array<var_animal_t, 3> animals = {cow, pig, dog};
+
+  for (const auto& animal: animals) {
+    std::visit(VisitSeeSay, animal);
+  }
+
+  //  functional style
+  auto pv = overloaded{
+          [](const Cow& c) {
+            std::cout << std::format(" The {} says '{}.'\n", c.see(), c.say());
+          },
+          [](const Dog& d) {
+            std::cout << std::format(" The {} says '{}.'\n", d.see(), d.say());
+          },
+          [](const Pig& p) {
+            std::cout << std::format(" The {} says '{}.'\n", p.see(), p.say());
+          }};
+
+
+  for (const auto& animal : animals) {
+    std::visit(pv, animal);
+  }
 
     return 0;
 }
